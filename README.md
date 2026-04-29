@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ISMS Work Order Hub
 
-## Getting Started
+A modern work order management prototype for Integrated Security Management Systems (ISMS). The app supports role-based authentication and authorization for requesters, secretary staff, technicians, systems administrators, and the manager.
 
-First, run the development server:
+## What it does
+
+- Lets non-ISMS users register as requester accounts and submit work orders.
+- Tracks the required work order fields: timestamp, requester email, location, system, status, priority, and issue description.
+- Gives manager and sysadmin users the ability to review and assign requests to technicians.
+- Gives secretary users a triage role for moving requests into review.
+- Gives technician users a focused queue where they can update assigned work.
+- Persists prototype data in a local JSON file at data/app-db.json.
+
+## Tech stack
+
+- Next.js 16 App Router
+- React 19
+- Tailwind CSS 4
+- Zod for shared contracts and validation
+- bcryptjs for password hashing
+- jsonwebtoken with an HTTP-only cookie for sessions
+
+## Getting started
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create an environment file:
+
+```bash
+copy .env.example .env
+```
+
+3. Set JWT_SECRET in .env.
+
+4. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo accounts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The first authenticated request seeds the local data file automatically. These demo accounts all use the same password:
 
-## Learn More
+- Password: Password123!
+- Manager: manager@isms.local
+- Systems administrator: sysadmin1@isms.local
+- Secretary: secretary@isms.local
+- Technician: marcus.green@isms.local
+- Requester: requester@demo.local
 
-To learn more about Next.js, take a look at the following resources:
+## Key routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- / landing page
+- /login sign in
+- /register requester registration
+- /portal authenticated dashboard
+- /api/auth/* auth endpoints
+- /api/work-orders work order list and creation
+- /api/work-orders/[id] role-aware status and assignment updates
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- This implementation uses a local JSON-backed store to keep the prototype runnable without provisioning PostgreSQL first.
+- Internal ISMS roles are seeded in the prototype rather than self-registered.
+- If you want, the next step is to swap the JSON store for a PostgreSQL and Drizzle-backed persistence layer.
