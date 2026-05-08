@@ -24,6 +24,7 @@ export default async function RegisterPage() {
               width={56}
               height={56}
               className="shrink-0"
+              style={{ width: "auto", height: "auto" }}
             />
             <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
               Requester Access

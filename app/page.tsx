@@ -33,8 +33,9 @@ export default function Home() {
                   src="/isms_logo.png"
                   alt="ISMS Logo"
                   width={64}
-                  height={64}
+                  height={60}
                   className="shrink-0"
+                  style={{ width: "auto", height: "auto" }}
                   priority
                 />
                 <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--ink-2)]">

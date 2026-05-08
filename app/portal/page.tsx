@@ -71,6 +71,7 @@ export default async function PortalPage() {
                 width={48}
                 height={48}
                 className="shrink-0"
+                style={{ width: "auto", height: "auto" }}
               />
               <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
                 Authenticated Portal
