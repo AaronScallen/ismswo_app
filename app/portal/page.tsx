@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { RequestForm } from "@/components/portal/request-form";
@@ -63,9 +64,18 @@ export default async function PortalPage() {
       <section className="panel-strong reveal-up stagger-1 p-6 text-[var(--ink-1)] md:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-4">
-            <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
-              Authenticated Portal
-            </p>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/isms_logo.png"
+                alt="ISMS Logo"
+                width={48}
+                height={48}
+                className="shrink-0"
+              />
+              <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
+                Authenticated Portal
+              </p>
+            </div>
             <div>
               <h1 className="text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
                 {sessionUser.name}

@@ -3,6 +3,36 @@
 import { startTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type WorkOrderApiError = {
+  error?: string;
+  issues?: {
+    formErrors?: string[];
+    fieldErrors?: Record<string, string[] | undefined>;
+  };
+};
+
+function getValidationMessage(result: WorkOrderApiError | null) {
+  const formError = result?.issues?.formErrors?.[0];
+
+  if (formError) {
+    return formError;
+  }
+
+  const fieldErrors = result?.issues?.fieldErrors;
+
+  if (fieldErrors) {
+    for (const messages of Object.values(fieldErrors)) {
+      const firstMessage = messages?.[0];
+
+      if (firstMessage) {
+        return firstMessage;
+      }
+    }
+  }
+
+  return result?.error ?? "Unable to submit the work order.";
+}
+
 export function RequestForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -11,17 +41,18 @@ export function RequestForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setError(null);
     setSuccess(null);
     setIsPending(true);
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const payload = {
-      title: String(formData.get("title") ?? ""),
-      location: String(formData.get("location") ?? ""),
+      title: String(formData.get("title") ?? "").trim(),
+      location: String(formData.get("location") ?? "").trim(),
       system: String(formData.get("system") ?? ""),
       priority: String(formData.get("priority") ?? "normal"),
-      description: String(formData.get("description") ?? ""),
+      description: String(formData.get("description") ?? "").trim(),
     };
 
     const response = await fetch("/api/work-orders", {
@@ -32,17 +63,17 @@ export function RequestForm() {
       body: JSON.stringify(payload),
     });
 
-    const result = (await response.json().catch(() => null)) as {
-      error?: string;
-    } | null;
+    const result = (await response
+      .json()
+      .catch(() => null)) as WorkOrderApiError | null;
 
     if (!response.ok) {
-      setError(result?.error ?? "Unable to submit the work order.");
+      setError(getValidationMessage(result));
       setIsPending(false);
       return;
     }
 
-    event.currentTarget.reset();
+    form.reset();
     setSuccess("Work order submitted.");
     setIsPending(false);
 
@@ -60,6 +91,7 @@ export function RequestForm() {
         <input
           required
           name="title"
+          minLength={4}
           className="input-shell rounded-2xl px-4 py-3 text-sm"
           placeholder="Door controller not communicating"
         />
@@ -71,6 +103,7 @@ export function RequestForm() {
         <input
           required
           name="location"
+          minLength={4}
           className="input-shell rounded-2xl px-4 py-3 text-sm"
           placeholder="Building C, east entrance"
         />
@@ -108,6 +141,7 @@ export function RequestForm() {
         <textarea
           required
           name="description"
+          minLength={12}
           rows={5}
           className="input-shell rounded-[1.5rem] px-4 py-3 text-sm"
           placeholder="Describe the issue, what changed, and any urgency details."

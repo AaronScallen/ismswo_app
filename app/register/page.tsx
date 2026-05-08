@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { RegisterForm } from "@/components/auth/register-form";
@@ -16,9 +17,18 @@ export default async function RegisterPage() {
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5 py-6 sm:px-8 lg:px-10">
       <section className="grid flex-1 gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="panel-glass reveal-up stagger-1 p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
-            Requester Access
-          </p>
+          <div className="flex items-center gap-4">
+            <Image
+              src="/isms_logo.png"
+              alt="ISMS Logo"
+              width={56}
+              height={56}
+              className="shrink-0"
+            />
+            <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
+              Requester Access
+            </p>
+          </div>
           <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-[var(--ink-1)]">
             Create an account to submit and track your requests.
           </h1>

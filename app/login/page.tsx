@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/auth/login-form";
@@ -19,9 +20,19 @@ export default async function LoginPage() {
     <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 py-6 sm:px-8 lg:px-10">
       <section className="grid flex-1 gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="panel-strong reveal-up stagger-1 p-6 text-[var(--ink-1)] md:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
-            ISMS Portal Access
-          </p>
+          <div className="flex items-center gap-4">
+            <Image
+              src="/isms_logo.png"
+              alt="ISMS Logo"
+              width={56}
+              height={56}
+              className="shrink-0"
+              priority
+            />
+            <p className="font-mono text-xs uppercase tracking-[0.32em] text-[var(--ink-2)]">
+              ISMS Portal Access
+            </p>
+          </div>
           <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
             Sign in to review, assign, or track work orders.
           </h1>

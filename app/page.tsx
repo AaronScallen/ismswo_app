@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   requestLifecycle,
@@ -27,9 +28,19 @@ export default function Home() {
         <header className="panel-glass reveal-up stagger-1 px-5 py-4 md:px-7">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-3">
-              <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--ink-2)]">
-                Integrated Security Management Systems
-              </p>
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/isms_logo.png"
+                  alt="ISMS Logo"
+                  width={64}
+                  height={64}
+                  className="shrink-0"
+                  priority
+                />
+                <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--ink-2)]">
+                  Integrated Security Management Systems
+                </p>
+              </div>
               <div className="max-w-3xl space-y-3">
                 <h1 className="text-4xl font-semibold tracking-[-0.04em] text-[var(--ink-1)] sm:text-5xl lg:text-6xl">
                   Work orders for access, video, and intrusion in one controlled
